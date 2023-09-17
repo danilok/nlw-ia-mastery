@@ -12,7 +12,7 @@ const pump = promisify(pipeline);
 export async function uploadVideoRoute(app: FastifyInstance) {
   app.register(fastifyMultipart, {
     limits: {
-      fieldSize: 1_048_576 * 25, // 25mb
+      fileSize: 1048576 * 25, // 25mb
     },
   });
   app.post("/videos", async (request, reply) => {
@@ -42,7 +42,7 @@ export async function uploadVideoRoute(app: FastifyInstance) {
 
     const video = await prisma.video.create({
       data: {
-        name: data.fieldname,
+        name: data.filename,
         path: uploadDestination,
       },
     });
